@@ -1,0 +1,24 @@
+name: Run Tests
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - Epub/**
+      - Epub.Tests/**
+  workflow_dispatch:
+env:
+  DOTNET_VERSION: "6.0"
+jobs:
+  run-tests:
+    strategy:
+      max-parallel: 1
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+      - run: dotnet test Epub.Tests
