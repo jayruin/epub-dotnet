@@ -1,0 +1,1 @@
+[![Run Tests Badge](https://github.com/jayruin/epub-dotnet/workflows/Run%20Tests/badge.svg)](https://github.com/jayruin/epub-dotnet/actions/workflows/run-tests.yml)
