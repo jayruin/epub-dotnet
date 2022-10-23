@@ -42,7 +42,7 @@ public sealed class EpubReader : IDisposable
 
     private XDocument GetContainerDocument()
     {
-        ZipArchiveEntry containerXml = _zipArchive.GetEntry("META-INF/container.xml") ?? throw new FileNotFoundException();
+        ZipArchiveEntry containerXml = _zipArchive.GetEntry("META-INF/container.xml") ?? throw new ContainerXmlNotFoundException();
         using (Stream containerXmlStream = containerXml.Open())
         {
             return XDocument.Load(containerXmlStream);
@@ -56,8 +56,8 @@ public sealed class EpubReader : IDisposable
             ?.Element(_containerNamespace + "rootfiles")
             ?.Element(_containerNamespace + "rootfile")
             ?.Attribute("full-path")
-            ?.Value ?? throw new FileNotFoundException();
-        ZipArchiveEntry? opfFile = _zipArchive.GetEntry(opfPath) ?? throw new FileNotFoundException();
+            ?.Value ?? throw new PackageDocumentNotFoundException();
+        ZipArchiveEntry? opfFile = _zipArchive.GetEntry(opfPath) ?? throw new PackageDocumentNotFoundException();
         using(Stream opfStream = opfFile.Open())
         {
             return XDocument.Load(opfStream);
